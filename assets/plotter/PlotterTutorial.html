@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>PlotterTutorial</title>
+</head>
+<body><h1 id='import-data'>Import Data</h1>
+<p>Create a csv or excel file with example data like the following. </p>
+<p><img src="assets\image-20230910143248692.jpg" alt="image-20230910143248692" style="zoom:50%;" /></p>
+<p>Now click on the <em>Choose File</em> button (alternatively drag and drop your file onto the button). The data will be plotted and should look like this: </p>
+<p><img src="assets\image-20230910143654109.jpg" alt="image-20230910143654109" style="zoom:50%;" /></p>
+<h1 id='change-the-axis-labels'>Change the axis labels</h1>
+<p>Under the <em>Layout</em> section, click on <em>xaxis</em> the <em>title</em>. You should see this:</p>
+<p><img src="assets\image-20230910143916568.jpg" alt="image-20230910143916568" style="zoom:50%;" /></p>
+<p>You can click on <em>xaxis</em> again to collapse the section. Repeat for the y axis.</p>
+<h1 id='set-legend'>Set Legend</h1>
+<p>The legend is automatically shown, it can be toggled on/off with the <em>Showlegend</em> checkbox. Each data series is shown under the <em>Data</em> section on the right of the page. For now we just have the <em>y</em> series. Lets rename to <em><mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg xmlns="http://www.w3.org/2000/svg" width="2.282ex" height="1.912ex" role="img" focusable="false" viewBox="0 -833.9 1008.6 844.9" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" style="vertical-align: -0.025ex;"><defs><path id="MJX-2-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-2-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-2-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,363) scale(0.707)"><use data-c="32" xlink:href="#MJX-2-TEX-N-32"></use></g></g></g></g></svg></mjx-container><script type="math/tex">x^2</script></em>. Type this &quot;x&lt;sup&gt;2&lt;/sup&gt;&quot;  into the <em>name</em>:</p>
+<p><img src="assets\image-20230910144408872.jpg" alt="image-20230910144408872" style="zoom:50%;" /></p>
+<h1 id='markers-lines-or-markers-and-lines'>Markers, Lines, or Markers and Lines</h1>
+<p>Lets show each datapoint and keep the line for this dataseries. Under <em>Data</em>, <em>mode</em> select the <em>lines+markers</em> from the dropdown.</p>
+<p><img src="assets\image-20230910144713416.jpg" alt="image-20230910144713416" style="zoom:50%;" /></p>
+<h1 id='resize-plot'>Resize Plot</h1>
+<p>Lets make this a rectangle. Under the <em>Layout</em> section, change the margins for the bottom, left, right and top and the total width and height of the plot as shown below:</p>
+<p><img src="assets\image-20230910144930273.jpg" alt="image-20230910144930273" style="zoom:50%;" /></p>
+<h1 id='line-and-marker-styles'>Line and Marker Styles </h1>
+<p>Update the line style and the marker styles under the <em>Data</em> section as shown below: </p>
+<p><img src="assets\image-20230910145145553.jpg" alt="image-20230910145145553" style="zoom:50%;" /></p>
+<p>The plot should look like this: </p>
+<p><img src="assets\image-20230910145351650.jpg" alt="image-20230910145351650" style="zoom:50%;" /></p>
+<p>&nbsp;</p>
+<h1 id='templates'>Templates </h1>
+<p>You can save this plotting style as a template by clicking on the <em>Save Template</em> button. The template is saved by your browser. Refresh the page and reupload the data to the <em>Choose File</em>  button. Under Choose Template click on the template you just saved. Your plot should go from the default formatting to include the styles we just set up.</p>
+<p>&nbsp;</p>
+<h1 id='multiple-data-series'>Multiple Data Series </h1>
+<p>Create a csv or excel file with multiple data series formatted like such: </p>
+<p><img src="assets\image-20230910145922158.jpg" referrerpolicy="no-referrer" alt="image-20230910145922158"></p>
+<p>Or if they all share the same x data: </p>
+<p><img src="assets\image-20230910150027376.jpg" alt="image-20230910150027376" style="zoom:50%;" /></p>
+<p>Upload this file as before. The default plot should look like this:</p>
+<p><img src="assets\image-20230910150212648.jpg" alt="image-20230910150212648" style="zoom:50%;" /></p>
+<p>The data series styles can be adjusted individually as shown above. Alternatively, they can all be updated at the same time with the <em>Master Trace</em> style.  Here is an example and resulting plot: </p>
+<p><img src="assets\image-20230910150520350.jpg" alt="image-20230910150520350" style="zoom:50%;" /></p>
+<p><img src="assets\image-20230910150549039.jpg" alt="image-20230910150549039" style="zoom:50%;" /></p>
+<h1 id='changing-colors'>Changing Colors</h1>
+<p>Just above the <em>Layout</em> button, the color scheme can be changed and the colors for each series are changed in accordance with their matching color in the color scheme. For example lets use the <em>tab20</em> scheme.   </p>
+<p><img src="assets\image-20230910151115225.jpg" alt="image-20230910151115225" style="zoom:50%;" /></p>
+<p>It will look like this </p>
+<p><img src="assets\image-20230910151218060.jpg" alt="image-20230910151218060" style="zoom:50%;" /></p>
+<p>We can choose a sequential color scheme (the number of colors within the sequence is set by <em>n_colors</em>). Try <em>Viridis, Magma, Plasma,</em> etc. I will set as <em>Magma_r_</em> (reverse magma).</p>
+<h1 id='log-scale'>Log scale </h1>
+<p>Lets make this a log-log scale. We can do this by setting <em>type</em> to <em>log</em> for both <em>xaxis</em> and <em>yaxis</em>. As shown below I set the range from (0,1); note these are on the log scale. </p>
+<h1 id='tick-styles'>Tick styles </h1>
+<p>To only show the ticks every order of 1. Set <em>dtick</em> to 1 (again, this is logscale).  </p>
+<h1 id='moving-the-legend'>Moving the Legend</h1>
+<p>The legend can be moved with the <em>x</em> and <em>y</em> under the <em>Layout, legend</em>.  </p>
+<p><img src="assets/image-20230910152350013.jpg" alt="image-20230910152350013" style="zoom:50%;" /></p>
+<p>If you made all the changes noted above, the plot should look like this:</p>
+<p><img src="assets/image-20230910152438719.jpg" alt="image-20230910152438719" style="zoom:50%;" /></p>
+<p>&nbsp;</p>
+<h1 id='export-plot'>Export Plot</h1>
+<p>&nbsp;</p>
+<p>Within the plot region. Click on the button for either exporting as SVG or PNG:</p>
+<p><img src="assets\image-20230910150812733.jpg" alt="image-20230910150812733" style="zoom:50%;" /></p>
+<p>SVG formatting is useful if you open in Inkscape to do any final formatting. PNG is useful for placing directly into a document. Note the PNG is upscaled 8 times to improve resolution; the actual size in pixels is the <em>width</em> and <em>height</em>  set in the <em>Layout</em> section.   </p>
+</body>
+</html>

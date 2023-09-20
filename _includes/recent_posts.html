@@ -1,0 +1,26 @@
+<h1>Related Posts</h1>
+<ul>
+	
+{% assign count = 0 %}
+{% for post in site.posts %}
+	
+	{% if count > 2  %}
+		{% break %}
+	{% endif %}
+
+	{% if post.section == "article"  %}
+		{% if post.title != page.title %}
+			{% if post.tags contains 'draft' or post.tags contains 'requiresCompilation' %}
+			{% else %}
+				<li>
+				<h2><a href="{{ post.url }}">{{ 	post.title }}</a></h2>
+				<small>{{ post.date | date_to_string }}</small>
+				<p>  {{ post.excerpt }}   </p>
+				</li>
+				{% assign count = count | plus: 1 %}
+			{% endif %} 
+		{% endif %}
+	{% endif %}
+{% endfor %}
+
+</ul>

@@ -1,0 +1,166 @@
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    {% if page.title %}
+      {{ page.title }} &middot; {{ site.title }}
+    {% else %}
+      {{ site.title }} &middot; {{ site.tagline }}
+    {% endif %}
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  <!-- Icons -->
+  <!-- <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png"> -->
+  <link rel="shortcut icon" href="/public/shorticon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+       <script type="text/x-mathjax-config">
+         MathJax.Hub.Config({
+           tex2jax: {
+             inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+             processEscapes: true
+           }
+         });
+       </script>
+       <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .imgbox {
+            display: grid;
+            height: 100%;
+        }
+        .center-fit {
+            max-width: 100%;
+            max-height: 100vh;
+            margin: auto;
+        }
+    </style>
+
+</head>
+
+<noscript>
+  <h3 align="center" style="background-color:Tomato";
+  >You seem to hava javascript disabled. Therefore certain equations will not not show up. Please enable javascript for the best experience.
+  </h3>
+</noscript>
+
+
+<style>
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+</style>
+
+
+<div class="navbar">
+
+
+{% for item in site.data.navigation %}
+<div class="dropdown">
+  <button class="dropbtn">
+    <a href="{{ item.link }}">{{ item.name }}</a>
+
+      <i class="fa fa-caret-down"></i>
+    </button>
+    {% if item.name == "Chemical Engineering"%}
+      <div class="dropdown-content">
+      {% for post in site.tags.ChemicalEngineering %}
+        <a href="{{ post.url }}">{{ post.title }}</a>
+      {% endfor %}
+      </div>
+    {% endif %}
+    {% if item.name == "News"%}
+      <div class="dropdown-content">
+      {% for post in site.tags.News %}
+        <a href="{{ post.url }}">{{ post.title }}</a>  
+      {% endfor %}
+      </div>
+    {% endif %}
+    {% if item.name == "Tools"%}
+      <div class="dropdown-content">
+      {% for post in site.tags.Tools %}
+        <a href="{{ post.url }}">{{ post.title }}</a>
+      {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endfor %}
+
+  </div>
+
+<br>

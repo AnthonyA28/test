@@ -1,0 +1,294 @@
+<!-- Solves the Radical Deomposition of Methane (Kinetics HW2 Problem 4 Fall Semester 2020) -->
+
+<!DOCTYPE HTML>
+<html>
+
+<body>
+Click on the species name to toggle its presence on the graph. 
+<canvas id="chart" class="chartjs" width="300" height="150"></canvas><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  
+<script>
+
+
+
+
+
+
+// Returns the change in concentration of each species. 
+// as a map of species names to values. 
+
+// let C_0 = {CH4: 1.0*E(-3), CH3: 0, H: 0, H2: 0, C2H6: 0};
+// function f(C){
+//     //Reaction Constants 
+//     let K_1 = 14.0 // [1/S] 
+//     let K_r1 = 1.2*E(10) // [L/(mol*S)]
+//     let K_2 = 1.5*E(9) // [L/(mol*S)]#
+//     let K_r2 = 2.9*E(7) // [L/(mol*S)]
+//     let K_3 = 2.0*E(10) // [L/(mol*S)]
+//     let K_r3 = 4.5*E(4) // [1/S]
+
+//     let DC = [] // derivative solution (Change in concentrations)
+    
+
+//     DC.CH4 = -K_1*C.CH4 + K_r1*C.CH3*C.H -K_2*C.H*C.CH4 + K_r2*C.CH3*C.H2
+//     DC.CH3 = K_1*C.CH4 - K_r1*C.CH3*C.H + K_2*C.H*C.CH4 - K_r2*C.CH3*C.H2 - 2*K_3*C.CH3*C.CH3 + 2*K_r3*C.C2H6
+//     DC.H = K_1*C.CH4 - K_r1*C.CH3*C.H - K_2*C.H*C.CH4 + K_r2*C.CH3*C.H2
+//     DC.H2 = K_2*C.H*C.CH4 - K_r2*C.CH3*C.H2
+//     DC.C2H6 = K_3*C.CH3*C.CH3 - K_r3*C.C2H6
+
+//     return (DC) 
+// }
+
+
+// A -> B
+let C_0 = {A:1, B:0};
+function f(C){
+    let K_1 = 150000
+    let DC = [] // derivative solution (Change in concentrations)
+    
+    DC.A = -K_1*C.A
+    DC.B = K_1*C.A
+
+    return (DC) 
+}
+
+
+let skip = 1 // used in case you want to skip plot less data than time iterations. A skip of 1 will result in all data being plotted. skip=2 will plot every other point.
+let method = "runga_kutta"
+
+function E(exponent){
+    return Math.pow(10, exponent)
+}
+
+function forward_euler(C_0, time_0, time_1, dt){
+    let i = 0;
+    let TIME = [];
+    let m_C = [];
+
+    TIME[i] = time_0
+    m_C[i] = C_0
+
+    while(TIME[i] <= time_1) {
+        let DC = f(m_C[i])
+        m_C[i+1] = {}
+        for (const [species, C] of Object.entries(m_C[i])) {
+          m_C[i+1][species] = m_C[i][species] + dt*DC[species]
+        }
+        TIME[i+1] = TIME[i] + dt
+        i += 1
+    }
+
+    return [TIME, m_C]
+}
+
+function predictor_corrector(C_0, time_0, time_1, dt){
+    let i = 0;
+    let TIME = [];
+    let m_C = [];
+
+    TIME[i] = time_0
+    m_C[i] = C_0
+
+    while(TIME[i] <= time_1) {
+        
+        // Euler 
+        let DC = f(m_C[i])
+        m_C[i+1] = {}
+        for (const [species, C] of Object.entries(m_C[i])) {
+            m_C[i+1][species] = m_C[i][species] + dt*DC[species]
+        }
+        //Corrector 
+        let DC_next = f(m_C[i+1])
+        for (const [species, C] of Object.entries(m_C[i])) {
+            m_C[i+1][species] = m_C[i][species] + 0.5*dt*(DC[species]+DC_next[species])
+        }
+
+        TIME[i+1] = TIME[i] + dt
+        i += 1
+    }
+
+    return [TIME, m_C]
+}
+
+
+
+// Just for fun
+function RungaKutta6(C_0, time_0, time_1, dt){
+    let i = 0;
+    let TIME = [];
+    let m_C = [];
+
+    TIME[i] = time_0
+    m_C[i] = C_0
+
+    while(TIME[i] <= time_1) {
+        
+        let C = {}
+        Object.assign(C, m_C[i])
+        let K1 = f(m_C[i])
+
+        for (const [species, C] of Object.entries(m_C[i])) {
+            C[species] = m_C[i][species] + dt/2*K1[species]
+        }
+        
+        let K2 = f(C)
+        
+        for (const [species, C] of Object.entries(m_C[i])) {
+            C[species] = m_C[i][species] + dt/2*K2[species]
+        }
+
+        
+        let K3 = f(C)
+        for (const [species, C] of Object.entries(m_C[i])) {
+            C[species] = m_C[i][species] + dt*K3[species]
+        }
+
+        let K4 = f(C)
+
+
+        m_C[i+1] = {}
+        for (const [species, C] of Object.entries(m_C[i])) {
+            m_C[i+1][species] = m_C[i][species] + 0.2*dt*(K1[species]+2*K2[species]+2*K3[species]+K4[species])
+        }
+
+        
+
+        TIME[i+1] = TIME[i] + dt
+        i += 1
+    }
+
+    return [TIME, m_C]
+}
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+
+function perform_numerical_integration(dt, end_time, method){
+    console.log(method)
+
+
+    let results =[]
+    if (method == "runga_kutta"){
+        results = RungaKutta6(C_0, 0, end_time, dt)
+        console.log("runga_kutta")
+    }
+    else if (method == "forward_euler"){
+        results = forward_euler(C_0, 0, end_time, dt)
+        console.log("Solving with forward_euler")
+    }
+    else if (method == "forward_euler_corrected"){
+        console.log("Solving with predictor_corrector")
+        results = predictor_corrector(C_0, 0, end_time, dt)
+    } else {
+        console.log("no method")
+    }
+
+
+    // From here on in we are just doing some stuff to make this plottable. 
+    let TIME = results[0]
+    let m_C = results[1] 
+
+    let PlotData = []
+
+    for (const [species, C] of Object.entries(m_C[0])) {
+        PlotData[species] = []
+        for(var row =0; row < m_C.length; row+=skip ) {       
+            PlotData[species][row] = {x: TIME[row], y: m_C[row][species]}
+        }        
+    }
+
+    let datasets = []
+    let i = 0
+    for (const [species, Cs] of Object.entries(PlotData)) {
+        datasets[i] = {}
+        datasets[i].label = species
+        datasets[i].data = PlotData[species]
+        datasets[i].showLine = true
+        datasets[i].fill = false
+        datasets[i].borderColor = getRandomColor()
+        datasets[i].pointRadius = 1
+        i ++
+    }
+
+    // Plot the data 
+    var chart = new Chart(document.getElementById("chart"),
+        {"type":"scatter",
+            "data":{
+                datasets: datasets
+            },
+            options: {
+                tooltips: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                hover: {
+                  mode: 'nearest',
+                  intersect: true
+                },
+                scales: {
+                  yAxes: [{
+                    scaleLabel:{
+                        display: true,
+                        labelString: "Concentration"
+                    },
+                    ticks: {
+                      // beginAtZero:true
+                    }
+                  }],
+                  xAxes:[{
+                    scaleLabel:{
+                        display: true,
+                        labelString: "time [s]"
+                    },
+                  }]
+                },
+              }
+                
+        }
+    );
+
+    
+
+}
+
+
+method = "forward_euler"
+perform_numerical_integration(1*E(-7), 30*E(-6), method) // Perform a default calculation 
+
+function update_params(){
+    let dt = parseFloat(document.getElementById("dt_id").value); 
+    let end_time  = parseFloat(document.getElementById("end_time_id").value); 
+    var e = document.getElementById("method");
+    var method = e.options[e.selectedIndex].text;
+    perform_numerical_integration  (dt, end_time, method )
+}
+
+</script>
+
+<form action="#" onsubmit="update_params();return false">
+
+    Input time difference between iterations and the end time. 
+    <br>
+    dt : <input type="text" id="dt_id"  value="1E-7" =>
+    End Time : <input type="text" id="end_time_id"  value="30E-6" => <input type="submit">
+    <br>
+</form>
+
+<label for="methods">Method:</label>
+
+<select name="method" id="method">
+  <option value="runga_kutta">runga_kutta</option>
+  <option value="forward_euler">forward_euler</option>
+  <option value="forward_euler_corrected">forward_euler_corrected</option>
+</select>
+  
+</body>
+
+</html>

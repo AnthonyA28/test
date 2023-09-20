@@ -1,0 +1,12 @@
+- name: Home
+  link: /
+- name: Chemical Engineering
+  link: /Chemical Engineering.html
+# - name: News
+#   link: /News.html
+- name: Tools
+  link: /Tools.html
+- name: About
+  link: /About.html
+# - name: Plotter
+#   link: /Tools/Plotter.html

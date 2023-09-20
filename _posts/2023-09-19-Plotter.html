@@ -1,0 +1,173 @@
+---
+title: Plotter
+tags: Tools
+---
+
+{% include head.html %}
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ "HTML-CSS": { scale: 1.3, linebreaks: { automatic: true } },SVG: { font: "STIX General" },displayAlign: "left" });</script>
+<script src="/assets/plotter/deps/papaparse.js"></script>
+<script src="/assets/plotter/deps/Inputer.js"></script>
+<script src="/assets/plotter/deps/Options.js"></script>
+<!-- <script type="text/javascript">window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);</script> NOT SURE WHY I EVERY HAD THIS --> 
+<script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+
+<style type="text/css">
+  body
+  {
+    font-size: 13px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background-color: #ededed;
+  }
+
+  .collapsible {
+    color: #000;
+    background-color: #FFF;
+    border: none;
+    text-align: right;
+    font-size: 13px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  .active, .collapsible:hover {
+    background-color: #aaa;
+  }
+</style>
+
+<main class="content-wraper" id="content-wraper">
+
+  <div id="wrapper" style="border: 1px solid #FFFFFF">
+
+
+    
+    <div style="display: inline-block;width:350px;height:1000px;border: 1px solid #FFFFFF; vertical-align: top;">
+      <h2>
+          <a href="//assets/plotter/assets/PlotterTutorial.html">Help/Documentation</a>
+          <br>
+      </h2>
+
+
+      Open<input type="file" id="input_file">
+      <!-- <br> -->
+        <button type="submit" id="download" > Export json</button> 
+        <button type="submit" id="save_template" > Save Template</button> 
+        <button type="submit" id="delete_template" > Delete Template</button> 
+        <button type="submit" id="make_default_template" > Make Default Template</button> 
+            <!-- <button type="submit" id="save_template"> Save template </button>  -->
+        <!-- <button type="submit" id="open_templates"> Open templates</button>  -->
+        <div id="template_div"><strong>Choose Template:</strong> 
+        </div>
+        <div ><strong>Update:</strong>
+          Trace styles <input type="checkbox"  id="update_trace_styles_check" checked >
+          Trace names  <input type="checkbox"  id="update_trace_names_check" checked>
+          Axes labels  <input type="checkbox"  id="update_axes_labels_check" checked>
+        </div>
+
+      <br>
+      <select id="palettes">
+
+        <option>pyDefault</option>
+        <option>UTcolors</option>
+        <option>Paired</option>
+        <option>Dark2</option>
+        <option>Pastel1</option>
+        <option>Pastel2</option>
+        <option>Set1</option>
+        <option>Set2</option>
+        <option>Set3</option>
+        <option>tab10</option>
+        <option>tab20</option>
+        <option>tab20b</option>
+        <option>tab20c</option>
+
+        <option>viridis_</option>
+        <option>viridis_r_</option>
+        <option>magma_</option>
+        <option>magma_r_</option>
+        <option>plasma_</option>
+        <option>plasma_r_</option>
+        <option>cividis_</option>
+        <option>cividis_r_</option>
+        <option>mako_</option>
+        <option>mako_r_</option>
+        <option>rocket_</option>
+        <option>rocket_r_</option>
+        <option>inferno_</option>
+        <option>inferno_r_</option>
+
+      </select>
+      <input type="number" style="width:50px;" id="n_colors"> n_colors </input>
+
+      <h3>Layout:</h3>
+      <div id="layout">
+        <div id="app" ></div>
+      </div>
+      <h3>Master Trace:</h3>
+      <div id="appM"></div>
+
+    <button type="submit" id="helper_reset_colors">Reset Colors</button> 
+    
+    <button type="submit" id="helper_pair_colors">Pair Colors</button> 
+
+
+    <br>
+
+    <button type="submit" id="helper_pair_markers">Pair Markers</button> 
+
+    <button type="submit" id="helper_pair_linestyles">Pair Linestyles</button> 
+    <br>
+
+
+    </div>
+
+    <div style="display: inline-block;width:410px;height:410px;border: 1px solid #FFFFFF; vertical-align:  top" id="gd_div">
+      <div id="gd" ></div>
+    </div>
+
+    <div style="display: inline-block;width:350px;height:1000px;border: 1px solid #FFFFFF; vertical-align: top;">
+
+      <!-- Data -->
+      <div id="data">
+        Data:
+      </div>
+    </div>
+
+
+
+    <div style="display: inline-block;width:350px;height:1000px;border: 1px solid #FFFFFF; vertical-align: top;">
+
+
+      <style type="text/css">
+      .tg  {border-collapse:collapse;border-spacing:0;}
+      .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg .tg-cly1{text-align:left;vertical-align:middle}
+      .tg .tg-1wig{font-weight:bold;text-align:left;vertical-align:top}
+      .tg .tg-m919{font-family:inherit;font-weight:bold;text-align:left;vertical-align:middle}
+      .tg .tg-yla0{font-weight:bold;text-align:left;vertical-align:middle}
+      .tg .tg-0lax{text-align:left;vertical-align:top}
+      </style>
+      <table><thead><tr><th>Ångstrom</th><th>Nu</th></tr></thead><tbody><tr><td>Å</td><td>ν</td></tr><tr><td>Alpha</td><td>Xi</td></tr><tr><td>α</td><td>ξ</td></tr><tr><td>Beta</td><td>Omicron</td></tr><tr><td>β</td><td>ο</td></tr><tr><td>Gamma</td><td>Pi</td></tr><tr><td>γ</td><td>π</td></tr><tr><td>Γ</td><td>Π</td></tr><tr><td>Delta</td><td>Rho</td></tr><tr><td>δ</td><td>ρ</td></tr><tr><td>Δ</td><td>Lambda</td></tr><tr><td>Epsilon</td><td>λ</td></tr><tr><td>ε</td><td>Σ</td></tr><tr><td>ϵ</td><td>Tau</td></tr><tr><td>Eta</td><td>τ</td></tr><tr><td>η</td><td>Upsilon</td></tr><tr><td>Theta</td><td>υ</td></tr><tr><td>θ</td><td>Sigma</td></tr><tr><td>ϴ</td><td>σ</td></tr><tr><td>Iota</td><td>Chi</td></tr><tr><td>ι</td><td>χ</td></tr><tr><td>Kappa</td><td>Psi</td></tr><tr><td>κ</td><td>ψ</td></tr><tr><td>Κ</td><td>Omega</td></tr><tr><td>Zeta</td><td>ω</td></tr><tr><td>ζ</td><td>Ω</td></tr><tr><td>Λ</td><td>Phi</td></tr><tr><td>Mu</td><td>φ</td></tr><tr><td>μ</td><td>Cdot</td></tr><tr><td></td><td>·</td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></tbody></table>
+    </div>
+  </div>
+
+  </body>
+
+</main>
+
+
+
+<script >if (window.module) module = window.module;</script>
+<script src="/assets/plotter/templates.js"></script>
+<script src="/assets/plotter/index.js">
+</script>
+
